@@ -32,4 +32,10 @@ describe('cloudNameForPreviews', () => {
     expect(cloudNameForPreviews(config('live', 'production'))).toBe('mustafa');
     expect(cloudNameForPreviews(config('mock', 'test'))).toBe('demo');
   });
+
+  // A hosted preview runs in mock mode but shows the real photos of imported suits (owner,
+  // 2026-11-27: the thumbnails were broken there).
+  it('uses the real cloud on a hosted site even in mock mode, since its photos are real', () => {
+    expect(cloudNameForPreviews(config('mock', 'production'))).toBe('mustafa');
+  });
 });

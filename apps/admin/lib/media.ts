@@ -21,8 +21,9 @@ export function mockUploadsAllowed(config = mediaConfig()) {
   return config.mode === 'mock' && (config.appEnv === 'development' || config.appEnv === 'test');
 }
 
-// The cloud name previews are built with: the real one, or Cloudinary's public demo cloud in mock
-// mode (mock uploads don't exist there, so previews show their alt text instead).
+// The cloud name previews are built with: the real one, or Cloudinary's public demo cloud for local
+// mock runs (mock uploads don't exist there, so previews show their alt text instead). A hosted
+// preview is in mock mode too, but its suits' photos are real, so it uses the real cloud.
 export function cloudNameForPreviews(config = mediaConfig()) {
-  return config.mode === 'mock' ? 'demo' : (config.cloudName ?? 'demo');
+  return mockUploadsAllowed(config) ? 'demo' : (config.cloudName ?? 'demo');
 }
